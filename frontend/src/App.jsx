@@ -4,7 +4,7 @@ import UploadComponent from './components/UploadComponent';
 import ResultsComponent from './components/ResultsComponent';
 import AdsenseComponent from './components/AdsenseComponent'; // 1. IMPORT
 
-const API_URL = 'http://localhost:5000/api';
+const API_URL = '/api';
 // 2. GET THE PUBLISHER ID FROM THE .ENV FILE
 const ADSENSE_PUBLISHER_ID = import.meta.env.VITE_ADSENSE_PUBLISHER_ID;
 
