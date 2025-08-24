@@ -1,0 +1,59 @@
+.upload-container {
+  width: 100%;
+  max-width: 600px; /* Limit the max width for larger screens */
+  margin: 40px auto; /* Center the component */
+  padding: 20px;
+}
+
+.upload-box {
+  border: 2px dashed #007bff; /* A dashed border to indicate a drop zone */
+  border-radius: 12px;
+  padding: 40px 20px;
+  text-align: center;
+  background-color: #ffffff;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Style for when a user is dragging a file over the box */
+.upload-box.drag-over {
+  background-color: #e9f5ff;
+  border-color: #0056b3;
+}
+
+.upload-icon {
+  margin-bottom: 20px;
+}
+
+.upload-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+}
+
+.upload-subtitle {
+  color: #888;
+  margin: 10px 0;
+}
+
+.browse-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.browse-button:hover {
+  background-color: #0056b3;
+}
+
+.upload-hint {
+  margin-top: 20px;
+  font-size: 0.875rem;
+  color: #999;
+}

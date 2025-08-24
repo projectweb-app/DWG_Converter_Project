@@ -1,0 +1,17 @@
+.convert-more-button {
+  background-color: #6c757d; /* A neutral gray */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: -20px; /* Pull it up a bit closer to the results */
+  margin-bottom: 40px;
+}
+
+.convert-more-button:hover {
+  background-color: #5a6268;
+}
