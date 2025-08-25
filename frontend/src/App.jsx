@@ -4,7 +4,8 @@ import UploadComponent from './components/UploadComponent';
 import ResultsComponent from './components/ResultsComponent';
 import AdsenseComponent from './components/AdsenseComponent'; // 1. IMPORT
 
-const API_URL = 'http://13.61.10.85:5000/api'; // <-- USE YOUR AWS PUBLIC IP ADDRESS!
+// This is the final, correct version
+const API_URL = 'https://13.61.10.85/api'; // Use YOUR AWS IP address
 // 2. GET THE PUBLISHER ID FROM THE .ENV FILE
 const ADSENSE_PUBLISHER_ID = import.meta.env.VITE_ADSENSE_PUBLISHER_ID;
 
