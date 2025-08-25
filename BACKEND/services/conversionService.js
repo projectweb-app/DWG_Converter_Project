@@ -1,33 +1,53 @@
-// This service handles the business logic of converting a DWG file to a PDF.
-const path = require('path'); // A built-in Node.js tool
+const { exec } = require('child_process');
+const path = require('path');
+const fs = require('fs');
 
-/**
- * Simulates the conversion of a DWG file to PDF.
- * In a real application, this function would call a command-line tool.
- * @param {string} originalFilename - The full filename of the uploaded DWG file (e.g., 'uuid-drawing.dwg').
- * @returns {Promise<string>} A promise that resolves with the new PDF filename.
- */
-const convertDwgToPdf = (originalFilename) => {
+// IMPORTANT: Double-check this path on your server by running 'which ODAFileConverter'
+const ODA_CONVERTER_PATH = '/usr/bin/ODAFileConverter';
+
+const convertDwgToPdf = (inputFile) => {
   return new Promise((resolve, reject) => {
-    console.log(`Starting conversion for: ${originalFilename}...`);
+    // Defines where the uploaded files are and where the converted files will go.
+    const inputDir = path.dirname(inputFile);
+    const outputDir = path.join(inputDir, 'converted'); // We'll create a sub-folder for PDFs
+    const outputFileName = `${path.basename(inputFile, path.extname(inputFile))}.pdf`;
+    const outputFile = path.join(outputDir, outputFileName);
 
-    // Get the file name without the extension (e.g., 'uuid-drawing')
-    const baseFilename = path.parse(originalFilename).name;
-    const pdfFilename = `${baseFilename}.pdf`;
+    // Create the 'converted' subdirectory if it doesn't already exist.
+    if (!fs.existsSync(outputDir)) {
+      fs.mkdirSync(outputDir, { recursive: true });
+    }
 
-    // --- SIMULATION ---
-    // We use setTimeout to pretend the conversion takes 3 seconds.
-    // In a real app, you would replace this with your conversion command.
-    setTimeout(() => {
-      console.log(`Successfully converted ${originalFilename} to ${pdfFilename}`);
+    // This is the exact command we will run in the server's terminal.
+    // Format: Converter "InputFolder" "OutputFolder" "OutputType" "OutputVersion" "Recurse" "Audit" "InputFile"
+    const command = `"${ODA_CONVERTER_PATH}" "${inputDir}" "${outputDir}" "PDF" "V1.5" "0" "1" "${path.basename(inputFile)}"`;
+
+    console.log(`[CONVERTER] Preparing to convert: ${path.basename(inputFile)}`);
+    console.log(`[CONVERTER] Executing command: ${command}`);
+
+    // Node.js executes the command line tool.
+    exec(command, (error, stdout, stderr) => {
+      if (error) {
+        console.error(`[CONVERTER] Execution Error: ${error.message}`);
+        return reject(new Error('Failed to execute the conversion command.'));
+      }
+
+      // Check if the output file was actually created.
+      if (!fs.existsSync(outputFile)) {
+          console.error(`[CONVERTER] Process Error: Conversion failed. Output file not found.`);
+          console.error(`[CONVERTER] Stderr: ${stderr}`);
+          return reject(new Error('Conversion process failed to create a PDF file.'));
+      }
       
-      // The promise "resolves", meaning it finished successfully and is returning the result.
-      resolve(pdfFilename);
-    }, 3000); // 3000 milliseconds = 3 seconds
+      console.log(`[CONVERTER] Success: Successfully created ${outputFileName}`);
+      console.log(`[CONVERTER] Stdout: ${stdout}`);
+
+      // The promise resolves, returning just the name of the new PDF file.
+      resolve(outputFileName);
+    });
   });
 };
 
-// Make the function available to other files
 module.exports = {
   convertDwgToPdf,
 };
