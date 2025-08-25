@@ -5,7 +5,8 @@ import ResultsComponent from './components/ResultsComponent';
 import AdsenseComponent from './components/AdsenseComponent'; // 1. IMPORT
 
 // This is the final, correct version
-const API_URL = 'https://13.61.10.85/api'; // Use YOUR AWS IP address
+// Example in a config file
+const API_URL = "https://app.ia-lab.store"; // Make sure it's your domain and NOT the IP address
 // 2. GET THE PUBLISHER ID FROM THE .ENV FILE
 const ADSENSE_PUBLISHER_ID = import.meta.env.VITE_ADSENSE_PUBLISHER_ID;
 
